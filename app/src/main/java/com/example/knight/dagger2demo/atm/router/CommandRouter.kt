@@ -7,13 +7,7 @@ import com.example.knight.dagger2demo.atm.command.Result
 import com.example.knight.dagger2demo.atm.command.Status
 import javax.inject.Inject
 
-class CommandRouter {
-    private val commands: Map<String, Command>
-
-    @Inject
-    constructor(commands: Map<String, @JvmSuppressWildcards Command>) {
-        this.commands = commands
-    }
+class CommandRouter @Inject constructor(private val commands: Map<String, @JvmSuppressWildcards Command>) {
 
     fun route(input: String): Result {
         val splitInput = input.split(" ")

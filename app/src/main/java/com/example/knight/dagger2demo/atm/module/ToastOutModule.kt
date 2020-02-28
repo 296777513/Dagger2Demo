@@ -10,7 +10,7 @@ import dagger.Provides
 abstract class ToastOutModule {
     companion object {
         @Provides
-        fun testOutputter(): Outputter {
+        fun toastOutputter(): Outputter {
             return object : Outputter {
                 override fun output(output: String) {
                     Toast.makeText(
