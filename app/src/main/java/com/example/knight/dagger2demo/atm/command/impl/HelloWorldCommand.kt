@@ -8,8 +8,6 @@ import javax.inject.Inject
 class HelloWorldCommand @Inject constructor(private val outputter: Outputter) :
     Command {
 
-    override fun key() = "Hello"
-
     override fun handleInput(input: List<String>): Result {
         outputter.output("world!")
         return Result.handled()

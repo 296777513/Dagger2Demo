@@ -1,12 +1,11 @@
 package com.example.knight.dagger2demo.atm.command.impl
 
-import com.example.knight.dagger2demo.atm.component.PerSession
-import com.example.knight.dagger2demo.atm.data.Account
+import com.example.knight.dagger2demo.atm.component.UserCommandScope
 import com.example.knight.dagger2demo.atm.module.MaximumWithdrawal
 import java.math.BigDecimal
 import javax.inject.Inject
 
-@PerSession
+@UserCommandScope
 class WithdrawalLimiter @Inject constructor(
     @MaximumWithdrawal val maximumWithdrawal: BigDecimal
 ) {

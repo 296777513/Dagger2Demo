@@ -14,8 +14,6 @@ class WithdrawCommand @Inject constructor(
     private val withdrawalLimiter: WithdrawalLimiter
 ) : BigDecimalCommand(outputter) {
 
-    override fun key() = "withdraw"
-
     override fun handleAmount(amount: BigDecimal) {
         if (amount > withdrawalLimiter.remainingWithdrawalLimit) {
             outputter.output("withdraw don't bigger than ${withdrawalLimiter.remainingWithdrawalLimit} in a single transaction")

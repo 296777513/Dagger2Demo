@@ -10,8 +10,6 @@ class LogoutCommand @Inject constructor(
     private val outputter: Outputter,
     private val account: Account
 ) : Command {
-    override fun key() = "logout"
-
     override fun handleInput(input: List<String>): Result {
         input.takeIf {
             it.isEmpty()

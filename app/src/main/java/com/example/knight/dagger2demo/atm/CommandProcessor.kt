@@ -1,5 +1,6 @@
 package com.example.knight.dagger2demo.atm
 
+import com.example.knight.dagger2demo.BaseApplication
 import com.example.knight.dagger2demo.atm.command.Status
 import com.example.knight.dagger2demo.atm.router.CommandRouter
 import java.util.*
@@ -7,12 +8,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CommandProcessor @Inject constructor(firstCommandRouter: CommandRouter) {
+class CommandProcessor @Inject constructor() {
 
     private val commandRouterStack = ArrayDeque<CommandRouter>()
 
     init {
-        commandRouterStack.push(firstCommandRouter)
+        commandRouterStack.push(BaseApplication.appComponent?.InitCommandComponent()?.build()?.router())
     }
 
     fun process(input: String): Status {

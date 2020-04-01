@@ -5,12 +5,6 @@ import java.util.*
 
 /** Logic to process some user input.  */
 interface Command {
-    /**
-     * String token that signifies this command should be selected (e.g.:
-     * "deposit", "withdraw")
-     */
-    fun key(): String
-
     /** Process the rest of the command's words and do something.  */
     fun handleInput(input: List<String>): Result
 }
@@ -42,10 +36,10 @@ class Result(
             Optional.empty()
         )
 
-        fun enterNestedCommandSet(nestedCommandRouter: CommandRouter) =
+        fun enterNestedCommandSet(nestedCommandRouter: CommandRouter?) =
             Result(
                 Status.HANDLED,
-                Optional.of(nestedCommandRouter)
+                Optional.of(nestedCommandRouter!!)
             )
     }
 }
