@@ -1,2 +1,6 @@
 include ':app'
 rootProject.name='Dagger2Demo'
+include ':feat:login'
+include ':base'
+include ':feat:deposit'
+include ':feat:withdraw'
