@@ -15,9 +15,9 @@ class LoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
         val click = findViewById<Button>(R.id.login)
         val input = findViewById<EditText>(R.id.user_name_input)
+        val commandProcessor =
+            BaseApplication.instance.component<BaseGraph>().commandProcessor()
         click.setOnClickListener {
-            val commandProcessor =
-                BaseApplication.instance.component<BaseGraph>().commandProcessor()
             commandProcessor.process("login " + input.text.toString())
             input.setText("")
             setResult(Activity.RESULT_OK)

@@ -24,18 +24,21 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     lateinit var withdrawButton: Button
     lateinit var depositButton: Button
     lateinit var description: TextView
+    lateinit var logoutButton: Button
 
     private fun initView() {
         loginButton = findViewById(R.id.login)
         description = findViewById(R.id.description)
         withdrawButton = findViewById(R.id.withdraw)
         depositButton = findViewById(R.id.deposit)
+        logoutButton = findViewById(R.id.logout)
     }
 
     private fun setClickEvent() {
         loginButton.setOnClickListener(this)
         depositButton.setOnClickListener(this)
         withdrawButton.setOnClickListener(this)
+        logoutButton.setOnClickListener(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +90,16 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                     WITHDRAW_REQUEST
                 )
             }
+            logoutButton -> {
+                loginButton.visibility = View.VISIBLE
+                withdrawButton.visibility = View.GONE
+                depositButton.visibility = View.GONE
+                logoutButton.visibility = View.GONE
+                description.text = "Welcome to Dagger Bank, and chose your server"
+                val accountManager =
+                    BaseApplication.instance.component<AppComponent>().accountManager()
+                accountManager.clearAccount()
+            }
         }
     }
 
@@ -101,12 +114,14 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 loginButton.visibility = View.GONE
                 withdrawButton.visibility = View.VISIBLE
                 depositButton.visibility = View.VISIBLE
+                logoutButton.visibility = View.VISIBLE
                 description.text =
                     "${accountManager.getCurrentAccount()?.username}'s current balance is ${accountManager.getCurrentAccount()?.balance}"
             } else {
                 loginButton.visibility = View.VISIBLE
                 withdrawButton.visibility = View.GONE
                 depositButton.visibility = View.GONE
+                logoutButton.visibility = View.GONE
                 description.text = "Welcome to Dagger Bank, and chose your server"
             }
         }

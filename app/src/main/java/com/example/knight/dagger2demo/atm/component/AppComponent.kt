@@ -15,7 +15,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, DataBaseModule::class])
+@Component(modules = [AppModule::class])
 interface AppComponent : BaseGraph {
     fun LoginComponent(): LoginComponent.Builder
     fun depositComponent(): DepositComponent.Factory
@@ -29,24 +29,5 @@ class AppModule(private val mContext: Context) : BaseModule() {
     @Singleton
     fun provideContext(): Context {
         return mContext
-    }
-}
-
-@Module
-object DataBaseModule {
-
-    @Provides
-    @Singleton
-    fun toastOutputter(context: Context): Outputter {
-        return object : Outputter {
-            override fun output(output: String) {
-                Toast.makeText(
-                    context,
-                    output,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-        }
     }
 }

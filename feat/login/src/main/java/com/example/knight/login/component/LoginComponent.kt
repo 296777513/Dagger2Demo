@@ -1,6 +1,7 @@
 package com.example.knight.login.component
 
 import com.example.knight.base.command.CommandRouter
+import com.example.knight.base.module.LogoutModule
 import com.example.knight.login.module.LoginModule
 import dagger.Subcomponent
 import javax.inject.Scope
