@@ -7,6 +7,7 @@ import android.widget.EditText
 import com.example.knight.base.BaseActivity
 import com.example.knight.base.application.BaseApplication
 import com.example.knight.base.dagger.BaseGraph
+import com.example.knight.dagger.Dagger2ComponentFactory
 
 class WithdrawActivity : BaseActivity() {
 
@@ -17,6 +18,15 @@ class WithdrawActivity : BaseActivity() {
         val input = findViewById<EditText>(R.id.withdraw_input)
         val commandProcessor =
             BaseApplication.instance.component<BaseGraph>().commandProcessor()
+        commandProcessor.commandRouterStack.apply {
+            clear()
+            push(
+                Dagger2ComponentFactory.create(
+                    WithdrawDagger.AppGraph::class.java,
+                    WithdrawDagger.AppGraph::withdrawBuilder
+                ).router()
+            )
+        }
         click.setOnClickListener {
             commandProcessor.process("withdraw " + input.text.toString())
             input.setText("")

@@ -7,6 +7,7 @@ import android.widget.EditText
 import com.example.knight.base.BaseActivity
 import com.example.knight.base.application.BaseApplication
 import com.example.knight.base.dagger.BaseGraph
+import com.example.knight.dagger.Dagger2ComponentFactory
 
 class DepositActivity : BaseActivity() {
 
@@ -17,6 +18,15 @@ class DepositActivity : BaseActivity() {
         val input = findViewById<EditText>(R.id.deposit_input)
         val commandProcessor =
             BaseApplication.instance.component<BaseGraph>().commandProcessor()
+        commandProcessor.commandRouterStack.apply {
+            clear()
+            push(
+                Dagger2ComponentFactory.create(
+                    DepositDagger.AppGraph::class.java,
+                    DepositDagger.AppGraph::depositBuilder
+                ).router()
+            )
+        }
         click.setOnClickListener {
             commandProcessor.process("deposit " + input.text.toString())
             input.setText("")

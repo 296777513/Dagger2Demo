@@ -1,13 +1,10 @@
 package com.example.knight.dagger2demo
 
 import com.example.knight.base.application.BaseApplication
-import com.example.knight.dagger2demo.atm.component.AppModule
-import com.example.knight.dagger2demo.atm.component.DaggerAppComponent
+import com.example.knight.dagger2demo.atm.component.DaggerCrossGuardAppComponent
 
 class DaggerApplication : BaseApplication() {
-
-
     override fun createComponentBuilder(): Any? {
-        return DaggerAppComponent.builder().appModule(AppModule(this))
+        return DaggerCrossGuardAppComponent.builder()
     }
 }

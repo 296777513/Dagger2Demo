@@ -33,11 +33,16 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "com.google.dagger:dagger:2.27"
     kapt "com.google.dagger:dagger-compiler:2.27"
-    implementation project(":base")
+    implementation project(":base:common")
     implementation project(":feat:login")
     implementation project(":feat:deposit")
     implementation project(":feat:withdraw")
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //这两行是主要的
+    implementation project(':base:dagger.provider')
+    implementation project(':base:dagger.annotation')
+    kapt project(':processor:crossguard')
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.example.knight.base.BaseActivity
+import com.example.knight.base.account.AccountManager
 import com.example.knight.base.application.BaseApplication
 import com.example.knight.dagger2demo.atm.component.AppComponent
 import com.example.knight.deposit.DepositActivity
@@ -49,42 +50,17 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        val commandProcessor =
-            BaseApplication.instance.component<AppComponent>().commandProcessor()
         when (v) {
             loginButton -> {
-                commandProcessor.commandRouterStack.apply {
-                    clear()
-                    push(
-                        BaseApplication.instance.component<AppComponent>().LoginComponent().build()
-                            .router()
-                    )
-                }
                 startActivityForResult(Intent(this, LoginActivity::class.java), LOGIN_REQUEST)
             }
             depositButton -> {
-                commandProcessor.commandRouterStack.apply {
-                    clear()
-                    push(
-                        BaseApplication.instance.component<AppComponent>().depositComponent()
-                            .create()
-                            .router()
-                    )
-                }
                 startActivityForResult(
                     Intent(this, DepositActivity::class.java),
                     DEPOSIT_REQUEST
                 )
             }
             withdrawButton -> {
-                commandProcessor.commandRouterStack.apply {
-                    clear()
-                    push(
-                        BaseApplication.instance.component<AppComponent>().withdrawComponent()
-                            .create()
-                            .router()
-                    )
-                }
                 startActivityForResult(
                     Intent(this, WithdrawActivity::class.java),
                     WITHDRAW_REQUEST
@@ -96,9 +72,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 depositButton.visibility = View.GONE
                 logoutButton.visibility = View.GONE
                 description.text = "Welcome to Dagger Bank, and chose your server"
-                val accountManager =
-                    BaseApplication.instance.component<AppComponent>().accountManager()
-                accountManager.clearAccount()
+                AccountManager.clearAccount()
             }
         }
     }
@@ -107,16 +81,14 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            val accountManager =
-                BaseApplication.instance.component<AppComponent>().accountManager()
 
-            if (accountManager.getCurrentAccount() != null) {
+            if (AccountManager.getCurrentAccount() != null) {
                 loginButton.visibility = View.GONE
                 withdrawButton.visibility = View.VISIBLE
                 depositButton.visibility = View.VISIBLE
                 logoutButton.visibility = View.VISIBLE
                 description.text =
-                    "${accountManager.getCurrentAccount()?.username}'s current balance is ${accountManager.getCurrentAccount()?.balance}"
+                    "${AccountManager.getCurrentAccount()?.username}'s current balance is ${AccountManager.getCurrentAccount()?.balance}"
             } else {
                 loginButton.visibility = View.VISIBLE
                 withdrawButton.visibility = View.GONE
@@ -126,6 +98,4 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
-
-
 }
