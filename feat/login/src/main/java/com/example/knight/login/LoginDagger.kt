@@ -5,7 +5,7 @@ import com.example.knight.base.command.CommandRouter
 import com.example.knight.base.dagger.BaseGraph
 import com.example.knight.dagger.AppGraphDeclaration
 import com.example.knight.dagger.AppModuleDeclaration
-import com.example.knight.dagger.SubComponentDeclaration
+import com.example.knight.dagger.DaggerDeclaration
 import com.example.knight.dagger.SubcomponentBuilder
 import com.example.knight.login.command.LoginCommand
 import dagger.Binds
@@ -15,7 +15,7 @@ import dagger.multibindings.IntoMap
 import dagger.multibindings.StringKey
 import javax.inject.Scope
 
-@SubComponentDeclaration
+@DaggerDeclaration
 class LoginDagger {
     @LoginScope
     @Subcomponent(modules = [LoginModule::class])

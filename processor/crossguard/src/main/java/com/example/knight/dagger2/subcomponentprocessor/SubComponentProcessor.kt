@@ -2,14 +2,12 @@ package com.example.knight.dagger2.subcomponentprocessor
 
 import com.example.knight.dagger.AppGraphDeclaration
 import com.example.knight.dagger.AppModuleDeclaration
-import com.example.knight.dagger.SubComponentDeclaration
+import com.example.knight.dagger.DaggerDeclaration
 import com.example.knight.dagger2.CrossGuardProcessor
 import com.example.knight.dagger2.utils.toSortedCollection
 import com.squareup.javapoet.ClassName
 import java.lang.Exception
-import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.TypeElement
-import javax.lang.model.util.Types
 
 class SubComponentProcessor : CrossGuardProcessor {
 
@@ -28,7 +26,7 @@ class SubComponentProcessor : CrossGuardProcessor {
 
         @Suppress("UNCHECKED_CAST")
         val declarationElements =
-            roundEnv.getElementsAnnotatedWith(SubComponentDeclaration::class.java) as Set<TypeElement>
+            roundEnv.getElementsAnnotatedWith(DaggerDeclaration::class.java) as Set<TypeElement>
         val declarationElement = when {
             declarationElements.isEmpty() -> {
                 val noAnnotationsPresent = appModules.isEmpty() && appGraphs.isEmpty()

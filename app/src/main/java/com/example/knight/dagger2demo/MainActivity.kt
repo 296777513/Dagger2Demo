@@ -8,8 +8,6 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.knight.base.BaseActivity
 import com.example.knight.base.account.AccountManager
-import com.example.knight.base.application.BaseApplication
-import com.example.knight.dagger2demo.atm.component.AppComponent
 import com.example.knight.deposit.DepositActivity
 import com.example.knight.login.LoginActivity
 import com.example.knight.withdraw.WithdrawActivity

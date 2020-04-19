@@ -20,7 +20,7 @@ class DaggerProcessor : KotlinAbstractProcessor() {
         AppModuleDeclaration::class.java,
         ComponentDeclaration::class.java,
         DaggerClassHolder::class.java,
-        SubComponentDeclaration::class.java,
+        DaggerDeclaration::class.java,
         SubModule::class.java
     )
     private val crossGuardProcessors = listOf(

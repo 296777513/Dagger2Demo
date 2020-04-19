@@ -1,5 +1,7 @@
 package com.example.knight.dagger2.componentprocessor
 
+import com.example.knight.dagger.AppGraphDeclaration
+import com.example.knight.dagger.AppModuleDeclaration
 import com.example.knight.dagger.ComponentDeclaration
 import com.example.knight.dagger.SubModule
 import com.example.knight.dagger2.CrossGuardProcessor
@@ -8,6 +10,7 @@ import com.example.knight.dagger2.subcomponentprocessor.DAGGER_SUB_MODULE_PACKAG
 import com.example.knight.dagger2.subcomponentprocessor.SubComponentModel
 import com.example.knight.dagger2.subcomponentprocessor.toModel
 import com.example.knight.dagger2.utils.toSortedCollection
+import com.squareup.javapoet.ClassName
 import javax.lang.model.element.TypeElement
 import javax.lang.model.util.Elements
 import javax.lang.model.util.Types
@@ -50,9 +53,10 @@ class ComponentProcessor : CrossGuardProcessor {
                 throw Exception("A single componentDeclaration is allowed per Application. Found $declarations}")
             }
         }
+
         componentDeclarationElement as TypeElement
         subComponentModel?.appGraphs?.forEach {
-            System.out.println("graph: " + it.simpleName())
+            println("graph: " + it.simpleName())
         }
         val allComponentModels =
             getSubComponentModelOnClassPath(elementUtils, typeUtils).apply {

@@ -4,21 +4,17 @@ import android.content.Context
 import android.widget.Toast
 import com.example.knight.base.Outputter
 import com.example.knight.base.application.BaseApplication
-import com.example.knight.base.command.Command
 import com.example.knight.base.command.CommandRouter
 import com.example.knight.dagger.AppGraphDeclaration
 import com.example.knight.dagger.AppModuleDeclaration
-import com.example.knight.dagger.SubComponentDeclaration
+import com.example.knight.dagger.DaggerDeclaration
 import com.example.knight.dagger.SubcomponentBuilder
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
-import dagger.multibindings.IntoMap
-import dagger.multibindings.StringKey
 import javax.inject.Singleton
 
-@SubComponentDeclaration
+@DaggerDeclaration
 interface BaseDagger {
 
     @Singleton

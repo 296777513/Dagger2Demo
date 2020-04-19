@@ -7,7 +7,7 @@ import com.example.knight.base.module.AmountsModule
 import com.example.knight.base.module.LogoutModule
 import com.example.knight.dagger.AppGraphDeclaration
 import com.example.knight.dagger.AppModuleDeclaration
-import com.example.knight.dagger.SubComponentDeclaration
+import com.example.knight.dagger.DaggerDeclaration
 import com.example.knight.dagger.SubcomponentBuilder
 import com.example.knight.withdraw.command.WithdrawCommand
 import dagger.Binds
@@ -17,7 +17,7 @@ import dagger.multibindings.IntoMap
 import dagger.multibindings.StringKey
 import javax.inject.Scope
 
-@SubComponentDeclaration
+@DaggerDeclaration
 class WithdrawDagger {
     @WithdrawScope
     @Subcomponent(modules = [WithdrawModule::class, AmountsModule::class, LogoutModule::class])

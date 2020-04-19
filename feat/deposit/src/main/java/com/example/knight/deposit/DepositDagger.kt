@@ -3,11 +3,10 @@ package com.example.knight.deposit
 import com.example.knight.base.command.Command
 import com.example.knight.base.command.CommandRouter
 import com.example.knight.base.dagger.BaseGraph
-import com.example.knight.base.module.BaseModule
 import com.example.knight.base.module.LogoutModule
 import com.example.knight.dagger.AppGraphDeclaration
 import com.example.knight.dagger.AppModuleDeclaration
-import com.example.knight.dagger.SubComponentDeclaration
+import com.example.knight.dagger.DaggerDeclaration
 import com.example.knight.dagger.SubcomponentBuilder
 import com.example.knight.deposit.command.DepositCommand
 import dagger.Binds
@@ -17,8 +16,9 @@ import dagger.multibindings.IntoMap
 import dagger.multibindings.StringKey
 import javax.inject.Scope
 
-@SubComponentDeclaration
+@DaggerDeclaration
 class DepositDagger {
+
     @DepositScope
     @Subcomponent(modules = [DepositModule::class, LogoutModule::class])
     interface DepositComponent : BaseGraph {
