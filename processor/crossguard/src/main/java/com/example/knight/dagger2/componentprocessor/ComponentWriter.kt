@@ -24,7 +24,7 @@ class ComponentWriter(private val filer: Filer, private val elementUtils: Elemen
             addModifiers(Modifier.PUBLIC, Modifier.STATIC)
             addMethod(
                 MethodSpec
-                    .methodBuilder("build")
+                    .methodBuilder("builder")
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                     .returns(
                         ClassName.get(
@@ -36,16 +36,36 @@ class ComponentWriter(private val filer: Filer, private val elementUtils: Elemen
             )
             build()
         }
+
+        val componentFactoryInterface = with(TypeSpec.interfaceBuilder("Factory")) {
+            addAnnotation(Component.Factory::class.java)
+            addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+            addSuperinterface(
+                ClassName.get(
+                    "",
+                    "dagger.android.AndroidInjector.Factory<dagger.android.DaggerApplication>"
+                )
+            )
+            build()
+        }
+
         val componentClassBuilder = TypeSpec.interfaceBuilder(generatedClassName.simpleName())
             .addModifiers(Modifier.PUBLIC)
             .addAnnotation(componentAnnotation)
             .addAnnotation(singleScopeAnnotation)
-            .addType(componentBuilderInterface)
+//            .addType(componentBuilderInterface)
+            .addType(componentFactoryInterface)
 
         componentModel.appGraphs.forEach {
             println("super interface: $it")
             componentClassBuilder.addSuperinterface(it)
         }
+        componentClassBuilder.addSuperinterface(
+            ClassName.get(
+                "",
+                "dagger.android.AndroidInjector<dagger.android.DaggerApplication>"
+            )
+        )
         JavaFile.builder(generatedClassName.packageName(), componentClassBuilder.build())
             .build()
             .writeTo(filer)

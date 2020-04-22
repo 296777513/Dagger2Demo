@@ -17,7 +17,7 @@ class WithdrawActivity : BaseActivity() {
         val click = findViewById<Button>(R.id.withdraw)
         val input = findViewById<EditText>(R.id.withdraw_input)
         val commandProcessor =
-            BaseApplication.instance.component<BaseGraph>().commandProcessor()
+            BaseApplication.component<BaseGraph>().commandProcessor()
         commandProcessor.commandRouterStack.apply {
             clear()
             push(

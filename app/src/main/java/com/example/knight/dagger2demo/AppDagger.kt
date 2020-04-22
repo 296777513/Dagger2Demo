@@ -5,6 +5,8 @@ import com.example.knight.dagger.AppModuleDeclaration
 import com.example.knight.dagger.ComponentDeclaration
 import com.example.knight.dagger.DaggerDeclaration
 import dagger.Module
+import dagger.android.AndroidInjectionModule
+import dagger.android.ContributesAndroidInjector
 
 @DaggerDeclaration
 class AppDagger {
@@ -12,9 +14,12 @@ class AppDagger {
     @AppGraphDeclaration
     interface AppGraph
 
-    @Module
+    @Module(includes = [AndroidInjectionModule::class])
     @AppModuleDeclaration
-    interface AppModule
+    interface AppModule {
+        @ContributesAndroidInjector
+        fun contributeMainActivity(): MainActivity
+    }
 }
 
 @ComponentDeclaration

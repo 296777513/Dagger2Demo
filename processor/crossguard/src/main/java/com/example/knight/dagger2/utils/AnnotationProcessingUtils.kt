@@ -68,6 +68,6 @@ internal fun Types.typeElementFromAnnotationClass(propertyAccessor: () -> KClass
 @PublishedApi
 internal fun classNameComparator(it: ClassName) = it.simpleName() + it.reflectionName()
 
-inline fun List<ClassName>.toSortedCollection(): Collection<ClassName> {
-    return this.sortedBy(::classNameComparator)
+inline fun List<ClassName>.toSortedCollection(): MutableCollection<ClassName> {
+    return this.sortedBy(::classNameComparator).toMutableList()
 }

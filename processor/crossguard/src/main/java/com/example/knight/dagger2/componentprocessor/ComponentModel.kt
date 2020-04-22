@@ -7,8 +7,8 @@ import javax.lang.model.util.Elements
 
 class ComponentModel(
     val componentDeclaration: TypeElement,
-    val appGraphs: Collection<ClassName>,
-    val appModules: Collection<ClassName>
+    val appGraphs: MutableCollection<ClassName>,
+    val appModules: MutableCollection<ClassName>
 ) : CrossGuardModel {
 
     fun getGeneratedScabbardClassName(elementUtils: Elements): ClassName {

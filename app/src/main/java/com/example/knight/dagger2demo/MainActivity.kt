@@ -3,14 +3,18 @@ package com.example.knight.dagger2demo
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.example.knight.base.BaseActivity
+import com.example.knight.base.Outputter
 import com.example.knight.base.account.AccountManager
+import com.example.knight.base.command.Command
 import com.example.knight.deposit.DepositActivity
 import com.example.knight.login.LoginActivity
 import com.example.knight.withdraw.WithdrawActivity
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), View.OnClickListener {
     companion object {
@@ -40,9 +44,14 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         logoutButton.setOnClickListener(this)
     }
 
+    @Inject
+    lateinit var outputter: Outputter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.i("liyachao", "is null ${outputter == null}")
+        outputter.output("123123123")
         initView()
         setClickEvent();
     }

@@ -1,16 +1,22 @@
 package com.example.knight.base.application
 
-import android.app.Application
 import com.example.knight.dagger.Dagger2ComponentFactory
 import com.example.knight.dagger.Graph
 import com.example.knight.dagger.TopLevelComponentProvider
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
-abstract class BaseApplication : Application(), TopLevelComponentProvider {
+abstract class BaseApplication : DaggerApplication(), TopLevelComponentProvider {
 
     private lateinit var topLevelComponent: Graph
+    private lateinit var androidInjector: AndroidInjector<DaggerApplication>
 
     companion object {
         lateinit var instance: BaseApplication
+
+        inline fun <reified T : Graph> component(): T {
+            return instance.component(T::class.java)
+        }
     }
 
     init {
@@ -18,29 +24,28 @@ abstract class BaseApplication : Application(), TopLevelComponentProvider {
     }
 
     override fun onCreate() {
+        androidInjector = createComponentFactory()
         super.onCreate()
         instance = this
-        topLevelComponent = buildComponent()
+        topLevelComponent = androidInjector as Graph
     }
+
+    override fun applicationInjector() = androidInjector
 
     // Through the reflect, creat the instance of Application(this class is in app module), and other feat modules can take the reference of BaseGraph.
-    open fun buildComponent(): Graph {
-        val componentBuilder = createComponentBuilder()
-        checkNotNull(componentBuilder) { "Default build component requires you to override createComponentBuilder." }
-        val klass = componentBuilder.javaClass
-        val build = klass.getDeclaredMethod("build")
-        build.isAccessible = true
-        return build.invoke(componentBuilder) as Graph
-    }
+//    open fun buildComponent(): Graph {
+//        checkNotNull(androidInjector) { "Default build component requires you to override createComponentBuilder." }
+//        val klass = androidInjector.javaClass
+//        val build = klass.getDeclaredMethod("create")
+//        build.isAccessible = true
+//        return build.invoke(androidInjector) as Graph
+//    }
 
-    inline fun <reified T : Graph> component(): T {
-        return component(T::class.java)
-    }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Graph> component(graphClass: Class<T>): T {
         return topLevelComponent as T
     }
 
-    open fun createComponentBuilder(): Any? = null
+    abstract fun createComponentFactory(): AndroidInjector<DaggerApplication>
 }

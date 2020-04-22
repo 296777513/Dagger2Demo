@@ -6,52 +6,47 @@ import com.example.knight.base.dagger.BaseGraph
 import com.example.knight.dagger.AppGraphDeclaration
 import com.example.knight.dagger.AppModuleDeclaration
 import com.example.knight.dagger.DaggerDeclaration
-import com.example.knight.dagger.SubcomponentBuilder
 import com.example.knight.login.command.LoginCommand
 import dagger.Binds
 import dagger.Module
-import dagger.Subcomponent
+import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import dagger.multibindings.StringKey
 import javax.inject.Scope
 
 @DaggerDeclaration
 class LoginDagger {
-    @LoginScope
-    @Subcomponent(modules = [LoginModule::class])
-    interface LoginComponent : BaseGraph {
-        fun router(): CommandRouter
-
-        @Subcomponent.Builder
-        interface Builder : SubcomponentBuilder<LoginComponent> {
-            override fun build(): LoginComponent
-        }
-    }
-
-    @Module
-    interface LoginModule {
-
-        @Binds
-        @IntoMap
-        @StringKey("login")
-        fun loginCommand(command: LoginCommand): Command
-    }
-
 
     @Scope
     @Retention(AnnotationRetention.RUNTIME)
     internal annotation class LoginScope
 
+    @Module
+    interface LoginModule {
+        @Binds
+        @IntoMap
+        @StringKey("login")
+        fun loginCommand(command: LoginCommand): Command
+
+        fun router(): CommandRouter
+
+        companion object {
+            @Provides
+            fun hints() = "I am injected data"
+        }
+    }
 
     @Module
     @AppModuleDeclaration
-    abstract class AppModule {
+    interface AppModule {
 
+        @LoginScope
+        @ContributesAndroidInjector(modules = [LoginModule::class])
+        fun loginActivity(): LoginActivity
     }
 
     @AppGraphDeclaration
-    interface AppGraph : BaseGraph {
-        fun loginBuilder(): LoginComponent.Builder
-    }
+    interface AppGraph : BaseGraph
 }
 

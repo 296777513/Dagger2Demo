@@ -31,11 +31,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
-    implementation "com.google.dagger:dagger:2.27"
     implementation project(':base:dagger.annotation')
     implementation project(':base:dagger.provider')
     kapt project(':processor:crossguard')
-
+    implementation "com.google.dagger:dagger:2.27"
+    implementation "com.google.dagger:dagger-android:2.27"
+    kapt "com.google.dagger:dagger-android-processor:2.27"
     kapt "com.google.dagger:dagger-compiler:2.27"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

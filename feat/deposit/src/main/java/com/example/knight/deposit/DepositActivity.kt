@@ -17,15 +17,15 @@ class DepositActivity : BaseActivity() {
         val click = findViewById<Button>(R.id.deposit)
         val input = findViewById<EditText>(R.id.deposit_input)
         val commandProcessor =
-            BaseApplication.instance.component<BaseGraph>().commandProcessor()
+            BaseApplication.component<BaseGraph>().commandProcessor()
         commandProcessor.commandRouterStack.apply {
             clear()
-            push(
-                Dagger2ComponentFactory.create(
-                    DepositDagger.AppGraph::class.java,
-                    DepositDagger.AppGraph::depositBuilder
-                ).router()
-            )
+//            push(
+//                Dagger2ComponentFactory.create(
+//                    DepositDagger.AppGraph::class.java,
+//                    DepositDagger.AppGraph::depositBuilder
+//                ).router()
+//            )
         }
         click.setOnClickListener {
             commandProcessor.process("deposit " + input.text.toString())

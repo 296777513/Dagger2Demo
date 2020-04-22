@@ -12,6 +12,7 @@ import com.example.knight.dagger.SubcomponentBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
+import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @DaggerDeclaration
@@ -29,7 +30,7 @@ interface BaseDagger {
     }
 
     @Module
-    interface LoginModule {
+    abstract class LoginModule {
     }
 
 
