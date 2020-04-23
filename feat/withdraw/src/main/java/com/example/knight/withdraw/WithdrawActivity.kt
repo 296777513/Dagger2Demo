@@ -4,28 +4,32 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import com.example.knight.base.BaseActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.knight.base.application.BaseApplication
-import com.example.knight.base.dagger.BaseGraph
+import com.example.knight.base.command.CommandRouter
+import com.example.knight.base.process.CommandProcessor
 import com.example.knight.dagger.Dagger2ComponentFactory
+import javax.inject.Inject
 
-class WithdrawActivity : BaseActivity() {
+class WithdrawActivity : AppCompatActivity() {
+
+
+    @Inject
+    lateinit var commandProcessor: CommandProcessor
+
+    @Inject
+    lateinit var router: CommandRouter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        BaseApplication.component<WithdrawDagger.AppGraph>().withdrawBuilder().build()
+            .injectWithdrawActivity(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_withdraw)
         val click = findViewById<Button>(R.id.withdraw)
         val input = findViewById<EditText>(R.id.withdraw_input)
-        val commandProcessor =
-            BaseApplication.component<BaseGraph>().commandProcessor()
         commandProcessor.commandRouterStack.apply {
             clear()
-            push(
-                Dagger2ComponentFactory.create(
-                    WithdrawDagger.AppGraph::class.java,
-                    WithdrawDagger.AppGraph::withdrawBuilder
-                ).router()
-            )
+            push(router)
         }
         click.setOnClickListener {
             commandProcessor.process("withdraw " + input.text.toString())

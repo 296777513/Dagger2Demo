@@ -23,6 +23,7 @@ class WithdrawDagger {
     @Subcomponent(modules = [WithdrawModule::class, AmountsModule::class, LogoutModule::class])
     interface WithdrawComponent : BaseGraph {
         fun router(): CommandRouter
+        fun injectWithdrawActivity(instance :WithdrawActivity)
 
         @Subcomponent.Builder
         interface Builder : SubcomponentBuilder<WithdrawComponent> {
@@ -43,12 +44,9 @@ class WithdrawDagger {
     @Retention(AnnotationRetention.RUNTIME)
     internal annotation class WithdrawScope
 
-
     @Module
     @AppModuleDeclaration
-    abstract class AppModule {
-
-    }
+    abstract class AppModule
 
     @AppGraphDeclaration
     interface AppGraph : BaseGraph {
