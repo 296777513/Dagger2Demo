@@ -14,19 +14,10 @@ import com.example.knight.dagger.Dagger2ComponentFactory
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
-
-    @Inject
-    lateinit var outputter: Outputter
-
-    @Inject
-    lateinit var hints: String
-
-    @Inject
-    lateinit var commandProcessor: CommandProcessor
-
-    @Inject
-    lateinit var router: CommandRouter
-
+    @Inject lateinit var outputter: Outputter
+    @Inject lateinit var hints: String
+    @Inject lateinit var commandProcessor: CommandProcessor
+    @Inject lateinit var router: CommandRouter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
