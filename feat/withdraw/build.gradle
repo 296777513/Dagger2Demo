@@ -1,17 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt' // 使用 kapt 注解处理工具
+apply plugin: 'kotlin-kapt'
 
 apply from: rootProject.file('feat/gradle/common.gradle')
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.0"
-
+    compileSdkVersion androidConfig.compileSdkVersion
+    buildToolsVersion androidConfig.buildToolsVersion
     defaultConfig {
-        minSdkVersion 24
-        targetSdkVersion 29
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.compileSdkVersion
         versionCode 1
         versionName "1.0"
 

@@ -1,6 +1,5 @@
 package com.example.knight.dagger2
 
-import me.eugeniomarletti.kotlin.metadata.shadow.utils.addToStdlib.safeAs
 import javax.annotation.processing.Filer
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.util.Elements
