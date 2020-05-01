@@ -7,3 +7,10 @@
 /captures
 .externalNativeBuild
 .cxx
+
+
+# Buck
+buck-out
+.buckd
+.okbuck
+.buckconfig.local

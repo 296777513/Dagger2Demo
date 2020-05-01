@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.uber</groupId>
+  <artifactId>okbuck</artifactId>
+  <versioning>
+    <release>0.50.8-liyachao</release>
+    <versions>
+      <version>0.50.8-liyachao</version>
+    </versions>
+    <lastUpdated>20200430124516</lastUpdated>
+  </versioning>
+</metadata>

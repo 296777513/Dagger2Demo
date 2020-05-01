@@ -29,7 +29,7 @@ abstract class BaseModule {
         @Provides
         @Singleton
         fun providerContext(): Context {
-            return BaseApplication.instance
+            return BaseApplication.appContext
         }
 
     }

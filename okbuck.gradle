@@ -1,0 +1,78 @@
+apply plugin: 'com.uber.okbuck'
+
+okbuck {
+    buildToolVersion = project.ext.androidConfig.buildToolsVersion
+    target = "android-${project.ext.androidConfig.compileSdkVersion}"
+    annotationProcessors = [
+            'processor:crossguard': ['com.example.knight.dagger2.DaggerProcessor']
+    ]
+    buckProjects = project.subprojects
+    wrapper {
+        repo = 'https://github.com/facebook/buck.git'
+    }
+    lint {
+        version = project.ext.androidConfig.androidToolsVersion
+        jvmArgs = '-Xmx1g'
+    }
+
+    kotlin {
+        // From properties.gradle
+        version = project.ext.androidConfig.kotlinAnnotationProcessingBuckVersion
+    }
+    exopackage = [
+            app: true
+    ]
+    primaryDexPatterns = [
+            "app": [
+                    "^com/example/knight/dagger2demo/AppShell^",
+                    "^androidx/multidex/",
+                    "^com/facebook/buck/android/support/exopackage/",
+                    "^com/example/knight/dagger2demo/BuildConfig^",
+            ]
+    ]
+    appLibDependencies = [
+            "app": [
+                    "buck-android-support",
+                    "androidx.multidex:multidex",
+                    "libraries/javalibrary:main",
+                    "libraries/common:paidRelease",
+            ]
+    ]
+    externalDependencies {
+        autoValueConfigurations = [
+                "autoValue",
+                "autoValueAnnotations",
+                "autoValueParcel",
+                "roomCompiler",
+                "roomCompilerAndParcel"
+        ]
+        downloadInBuck = false
+    }
+    resourceUnion = false
+    jetifier {
+        aarOnly = true
+    }
+    dependencies {
+        forcedOkbuck deps.javaxAnnotations
+        forcedOkbuck deps.multidex
+    }
+    intellij {
+        sources = true
+    }
+}
+
+
+// setup required by okbuck (https://github.com/uber/okbuck/releases/tag/v0.48.2)
+afterEvaluate {
+    dependencies {
+        def autoValueDeps = [project.ext.deps.autoValue]
+        def autoValueAnnotationsDeps = autoValueDeps + [project.ext.deps.autoValueAnnotations]
+        def autoValueParcelDeps = autoValueDeps + [project.ext.deps.autoValueParcel]
+        def roomCompilerDeps = [project.ext.deps.roomCompiler]
+        autoValue autoValueDeps
+        autoValueAnnotations autoValueAnnotationsDeps
+        autoValueParcel autoValueParcelDeps
+        roomCompiler roomCompilerDeps
+        roomCompilerAndParcel roomCompilerDeps + autoValueParcelDeps
+    }
+}
