@@ -150,7 +150,7 @@ runOkBuck ( ) {
     echo
 
     rm -f $OKBUCK_SUCCESS
-    ( "$SCRIPT_DIR/gradlew" -p "$SCRIPT_DIR" okbuck -Dokbuck.wrapper=true $EXTRA_OKBUCK_ARGS &&
+    ( "$SCRIPT_DIR/gradlew" -p "$SCRIPT_DIR" okbuck -Dokbuck.wrapper=true -PisOkBuckTask=true $EXTRA_OKBUCK_ARGS &&
     updateOkBuckSuccess && success "PROCEEDING WITH BUCK" ) || die "OKBUCK FAILED"
 }
 

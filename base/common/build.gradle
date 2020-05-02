@@ -36,7 +36,6 @@ dependencies {
     implementation deps.dagger
     implementation deps.daggerAndroid
     implementation deps.javaxAnnotations
-    api deps.guava
     kapt deps.daggerAndroidProcessor
     kapt deps.daggerCompiler
     kapt project(':processor:crossguard')

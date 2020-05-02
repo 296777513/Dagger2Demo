@@ -35,7 +35,7 @@ okbuck {
                     "buck-android-support",
                     "androidx.multidex:multidex",
                     "libraries/javalibrary:main",
-                    "libraries/common:paidRelease",
+                    "libraries/common:paidRelease"
             ]
     ]
     externalDependencies {
@@ -76,3 +76,14 @@ afterEvaluate {
         roomCompilerAndParcel roomCompilerDeps + autoValueParcelDeps
     }
 }
+// okbuck need extra dependency(guava), because the dagger generates the code that use the Guava ImmutableMap in Buck
+allprojects {
+    afterEvaluate {
+        if (isOkBuck() && (project.plugins.hasPlugin("com.android.application") || project.plugins.hasPlugin("com.android.library"))) {
+            project.dependencies {
+                implementation deps.guava
+            }
+        }
+    }
+}
+
